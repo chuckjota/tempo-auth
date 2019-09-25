@@ -18,21 +18,14 @@ $router->get('/', function () use ($router) {
 
 // API route group
 $router->group(['prefix' => 'api'], function () use ($router) {
-    // Matches "/api/register
-   $router->post('register', 'AuthController@register');
-     // Matches "/api/login
-    $router->post('login', 'AuthController@login');
-
-    // Matches "/api/profile
-    $router->get('profile', 'UserController@profile');
-
-    // Matches "/api/user 
-    //get one user by id
-    $router->get('users/{id}', 'UserController@singleUser');
-
-    // Matches "/api/users
-    $router->get('users', 'UserController@allUsers');
-
-    // Matches "/api/logout
-    $router->get('logout', 'AuthController@logout');
+        // Matches "/api/register
+        $router->post('register', 'AuthController@register');
+         // Matches "/api/login
+        $router->post('login', 'AuthController@login');
+    
+    $router->group(['middleware' => 'auth'], function () use ($router) {        
+        // Matches "/api/logout
+        $router->get('logout', 'AuthController@logout');
+   
+    });
 });
